@@ -54,7 +54,7 @@ public class Lab1P2_AndreFlores {
         return matcher.matches();
     }
     private static boolean validarContra(String contra) {
-        String regex = "^[a-zA-Z0-9._%&$+-]+[!?<>] {8,}$";
+        String regex = "^[a-zA-Z0-9._%&$+-?<>!]{8,}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(contra);
         return matcher.matches();
