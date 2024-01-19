@@ -36,10 +36,10 @@ public class Lab1P2_AndreFlores {
                 }
                 break;
                 case 3: {
-                    System.out.println("Muchas gracias.");
+
                 }
                 case 4: {
-
+                    System.out.println("Muchas gracias.");
                 }
                 break;
             }
@@ -51,6 +51,12 @@ public class Lab1P2_AndreFlores {
         String regex = "^[a-zA-Z0-9._%&$+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(correoElec);
+        return matcher.matches();
+    }
+    private static boolean validarContra(String contra) {
+        String regex = "^[a-zA-Z0-9._%&$+-]+[!?<>] {8,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(contra);
         return matcher.matches();
     }
 
@@ -87,7 +93,15 @@ public class Lab1P2_AndreFlores {
             }
         } while (!validarCorreo(correoElec));
         System.out.println("Ingrese su contrasenia:");
-        String contra = entrada.nextLine();
+        String contra;
+        do {
+            System.out.println("Ingrese su contrasenia (1 simbolo, 1 mayuscula, 1 minuscula, 1 numero");
+            contra = entrada.nextLine();
+            if (!validarContra(contra)) {
+                System.out.println("Formato de la contra incorrecta. tiene que tener mas de 8 caracteres, una mayuscula, una minuscula, un numero y un simbolo (!, ?, >, <, $ y %.");
+            }
+        } while (!validarContra(contra));
+       contra = entrada.nextLine();
         return new Usuario(nombre, apellido, fn, correoElec, contra);
 
     }
