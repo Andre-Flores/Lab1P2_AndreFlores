@@ -13,6 +13,7 @@ public class Lab1P2_AndreFlores {
         ArrayList<Usuario> Registro = new ArrayList();
         Scanner entrada = new Scanner(System.in);
         int opc;
+        System.out.println("hola");
         do {
             System.out.println("1. Registrar usuario\n"
                     + "2. Listar todo \n"
@@ -121,5 +122,5 @@ public class Lab1P2_AndreFlores {
             System.out.println(listaPersonas);
         }
     }
-
+     
 }
