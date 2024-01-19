@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Lab1P2_AndreFlores {
 
@@ -22,15 +24,15 @@ public class Lab1P2_AndreFlores {
                     Usuario nuevoUsuario = metodoAgregar();
                     if (nuevoUsuario != null) {
                         Registro.add(nuevoUsuario);
-                        System.out.println("Usuario registrado con éxito.");
+                        System.out.println("Usuario registrado con exito.");
                     } else {
-                        System.out.println("Registro no exitoso. Verifica los datos e intenta nuevamente.");
+                        System.out.println("Registro no exitoso, tiene que tener al menos 13 anios");
                     }
 
                 }
                 break;
                 case 2: {
-
+                    listarPersonas(Registro);
                 }
                 break;
                 case 3: {
@@ -43,6 +45,13 @@ public class Lab1P2_AndreFlores {
             }
 
         } while (opc != 4);
+    }
+
+    private static boolean validarCorreo(String correoElec) {
+        String regex = "^[a-zA-Z0-9._%&$+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(correoElec);
+        return matcher.matches();
     }
 
     private static Usuario metodoAgregar() {
@@ -64,23 +73,39 @@ public class Lab1P2_AndreFlores {
         hoy.add(Calendar.YEAR, -13);
 
         if (fechaNacimiento.after(hoy)) {
-            System.out.println("Debe tener al menos 13 años para registrarte.");
+            System.out.println("Debe tener al menos 13 anioos para registrarte.");
             return null;
         }
         Date fn = new Date(Integer.parseInt(a) - 1900, Integer.parseInt(m) - 1, Integer.parseInt(d));
         System.out.println(fn);
-        System.out.println("ingrese su correo utilizando estos dominios: Gmail, Outlook, Yahoo, iCloud, ProtonMail y FastMail.");
-        String correoElec = entrada.nextLine();
-        System.out.println(" ingrese su contrasenia:");
+        String correoElec;
+        do {
+            System.out.println("Ingrese su correo utilizando estos dominios: Gmail, Outlook, Yahoo, iCloud, ProtonMail y FastMail.");
+            correoElec = entrada.nextLine();
+            if (!validarCorreo(correoElec)) {
+                System.out.println("Formato del correo incorrecto. intente otra vez .");
+            }
+        } while (!validarCorreo(correoElec));
+        System.out.println("Ingrese su contrasenia:");
         String contra = entrada.nextLine();
         return new Usuario(nombre, apellido, fn, correoElec, contra);
+
     }
 
-    private static void Listar(ArrayList<Usuario> Registro) {
+    private static void listarPersonas(ArrayList<Usuario> Registro) {
         if (Registro.isEmpty()) {
             System.out.println(" no hay nada en registro.");
         } else {
-
+            String listaPersonas = "Listado de mascotas:\n";
+            for (Usuario persona : Registro) {
+                listaPersonas += "Nombre: " + persona.getNombre()
+                        + ", Apellido: " + persona.getApellido()
+                        + ", Fecha de nacimiento: " + persona.getFechaNacimiento()
+                        + ", Correo electronico: " + persona.getCorreoElec()
+                        + ", Contrasenia: " + persona.getContra();
+            }
+            System.out.println(listaPersonas);
         }
     }
+
 }
